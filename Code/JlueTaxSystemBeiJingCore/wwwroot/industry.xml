@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <industry>
+    <name>业务一</name>
+    <value>industry</value>
+  </industry>
+  <industry>
+    <name>业务二</name>
+    <value>commerce</value>
+  </industry>
+</root>

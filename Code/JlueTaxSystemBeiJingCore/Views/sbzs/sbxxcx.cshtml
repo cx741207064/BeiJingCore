@@ -1,0 +1,423 @@
+﻿@model JlueTaxSystemBeiJingCore.Models.Model
+
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" id="ng-app" ng-app="viewApp" xmlns:ng="http://angularjs.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=8; IE=EDGE">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>申报查询及打印</title>
+    <!-- 框架通用js -->
+    <script type="text/javascript" src="/sbzs-cjpt-web/abacus/_res_/js/lib/angular.js"></script>
+    <link href="/sbzs-cjpt-web/abacus/_res_/css/comon0.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/sbzs-cjpt-web/resources/js/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/sbzs-cjpt-web/abacus/_res_/js/lib/json3.js"></script>
+
+
+    <script type="text/javascript" src="/sbzs-cjpt-web/resources/js/ecm-taglib/DatePicker/DatePicker.js"></script>
+
+    <script type="text/javascript" src="/sbzs-cjpt-web/resources/js/lib/message.js"></script>
+    <link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/resources/css/message/message_solid.css">
+    <script type="text/javascript" src="/sbzs-cjpt-web/resources/js/ecm-taglib/laypage-v1.3/laypage/laypage.js"></script>
+    <!-- 自定义js -->
+
+    <script type="text/javascript">
+        //低版本IE兼容性处理：控制台日志记录器。
+        if (!window.console) {
+            console = { log: function () { } };
+        }
+        var contextRoot = '/sbzs-cjpt-web';
+        var gdbsms = '1';
+        var urlgdslxDm = '1';
+        var nsrJson = '{"gsNsrsbh":"110109700089034","gsZgswjdm":"11101097105","error":"","dsDjxh":"","gsDjxh":"10111101000049968154","dsZgswjdm":"","dsNsrmc":"","gsNsrmc":"北京明达昌盛贸易有限公司","gsSwjgDm":"11101090000","dsNsrsbh":"","dsSwjgDm":""}';
+        var isZrrF = 'true';
+        var DZSWJ_TGC = 'B15D21E899AD58FEA8ADBA60C5C2BF61';
+        var ywbm = '';
+        var dyExYwbms = '';
+
+        $(function () {
+            var isZrr = 'true';
+            if (isZrr == "false") {
+                $("#tabId").hide();
+            }
+        });
+    </script>
+    <script type="text/javascript" src="/sbzs-cjpt-web/view/nssb/sbxxcx/sbxxcx.js"></script>
+    <script type="text/javascript" src="/sbzs-cjpt-web/view/nssb/sbxxcx/sbcxzdy.js"></script>
+    <script type="text/javascript" src="/sbzs-cjpt-web/view/nssb/sbzf/cp/cpDateControl.js"></script>
+    <style type="text/css">
+        #tabul {
+            margin: 20px auto;
+            width: 100%;
+            border-top: none;
+        }
+
+        .tablist ul {
+            overflow: hidden
+        }
+
+        .tablist li {
+            float: left
+        }
+
+        .tablist li {
+            padding-left: 28px;
+            padding-right: 28px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            border-right: none;
+            cursor: pointer
+        }
+
+        #listCon {
+            height: 100%;
+        }
+
+            #listCon .tabdiv {
+                padding: 10px;
+                display: none;
+            }
+
+        .tablist li:first-child {
+            border-left: none
+        }
+
+        .tablist li:hover {
+            background: #fff
+        }
+
+        .tablist li.cur {
+            background: #fff;
+            border-bottom: 1px solid #ccc
+        }
+
+        .show {
+            display: block;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+
+    <!--4.0版本UI  -->
+    <link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/abacus/resources4/layui/css/layui.css" />
+    <script type="text/javascript" src="/sbzs-cjpt-web/abacus/resources4/layui/layui.js"></script>
+    <script type="text/javascript" src="/sbzs-cjpt-web/abacus/resources4/tax-js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/sbzs-cjpt-web/abacus/resources4/tax-js/common.js"></script>
+    <link rel="stylesheet" href="/sbzs-cjpt-web/abacus/resources4/tax-css/common.css">
+    <link rel="stylesheet" href="/sbzs-cjpt-web/abacus/resources4/tax-font-icon/iconfont.css">
+</head>
+<body ng-app="viewApp">
+
+    <div class="tax-center-box" ng-controller="viewCtrl">
+        <div class="ui-tax-center-box">
+
+            <table class="top_title" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 10px;">
+                <tbody>
+                    <tr>
+                        <td width="52"><img src="/sbzs-cjpt-web/abacus/resources4/tax-images/png_icon/sbcxjdy.png"></td>
+                        <td><div class="big_title">申报查询及打印</div></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="title">
+                <ul class="nav">
+                    <li>报税中心</li>
+                    <li>申报信息查询</li>
+                </ul>
+                <div class="theme">申报信息查询</div>
+            </div>
+
+
+            <form class="marginT20 layui-form-item">
+                <table border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td ng-cloak ng-if="showGdsbz=='Y'" id="gdbztd1" style="display : none;">国地标志：</td>
+                        <td ng-cloak ng-if="showGdsbz=='Y'" id="gdbztd2" style="display : none;">
+                            <select id="gdbz" class="select01css" style="width: 155px;">
+                                <option value="0">全部</option>
+                                <option value="1">国税</option>
+                                <option value="2">地税</option>
+                            </select>
+                        </td>
+                        <td ng-cloak ng-if="showGdsbz=='N'" style="display : none;">国地标志：</td>
+                        <td ng-cloak ng-if="showGdsbz=='N'" style="display : none;">
+                            <span ng-if="showGdsbz=='N'" id="gdbztd1"></span>
+                            <span ng-if="showGdsbz=='N'" id="gdbztd2"></span>
+                            <select id="gdbz" class="select01css" style="display: none;">
+                                <option value="0">全部</option>
+                                <option value="1">国税</option>
+                                <option value="2">地税</option>
+                            </select>
+                        </td>
+                        <td colspan="4">
+                            <div class="layui-inline">
+                                <label class="layui-form-label label-left" style="width: 100px">申报日期起止:</label>
+                                <div class="layui-input-inline" style="width: 120px">
+                                    <input type="text" class="layui-input layui-date-input" id="sbrqq" lay-key="1">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label label-left" style="width: 20px">-</label>
+                                <div class="layui-input-inline" style="width: 120px">
+                                    <input type="text" class="layui-input layui-date-input" id="sbrqz" lay-key="2">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label label-left" style="width: 86px">所属期起止:</label>
+                                <div class="layui-input-inline" style="width: 120px">
+                                    <input type="text" class="layui-input layui-date-input" id="skssqq" lay-key="3">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label label-left" style="width: 20px">-</label>
+                                <div class="layui-input-inline" style="width: 120px">
+                                    <input type="text" class="layui-input layui-date-input" id="skssqz" lay-key="4">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn layui-btn-primary" onclick="queryBtn()">查询</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </form>
+
+            <div class="layui-tab layui-tab-brief" id="tabId">
+                <ul class="layui-tab-title">
+
+                    <li class="layui-this" id="li_sb">申报信息</li>
+                    <li id="li_cb">财报信息</li>
+
+                </ul>
+            </div>
+            <div id="listCon">
+                <div id="div_sb" class="show">
+                    <div style="clear:both;" ng-controller="viewCtrl" id="viewCtrlid">
+                        <table width="98%" class="layui-table" border="0" cellspacing="0" cellpadding="0" id="dataList">
+                            <tbody>
+                                <tr class="trheader">
+                                    <th width="5%">序号</th>
+                                    <th width="5%" ng-if="showGdsbz=='Y'">国地标志</th>
+                                    <th width="25%">申报表名称</th>
+                                    <th width="10%">征收项目</th>
+                                    <th width="10%">申报日期</th>
+                                    <th width="10%" title="税（费）款所属期起">所属期起</th>
+                                    <th width="10%" title="税（费）款所属期止">所属期止</th>
+                                    <th width="10%" title="应补退税（费）额">应补退金额</th>
+                                    <th width="10%">操作</th>
+                                </tr>
+                                <tr ng-repeat="item in sbxxcsmx |filter: {sbzfbz: '!Y'}" pzxh="{{item.pzxh}}">
+                                    <td align="center" ng-cloak ng-bind="item.index + 1"></td>
+                                    <td align="center" ng-cloak ng-if="showGdsbz=='Y'" ng-bind-html="item.gdslxDm | gdslxDm | to_trusted"></td>
+                                    <td align="left" ng-cloak ng-bind="item.ywbmmc"></td>
+                                    <td align="left" ng-cloak ng-bind="item.zsxmmc"></td>
+                                    <td align="center" ng-cloak ng-bind="item.sbrq | limitTo : 10"></td>
+                                    <td align="center" ng-cloak ng-bind="item.ssqq | limitTo : 10"></td>
+                                    <td align="center" ng-cloak ng-bind="item.ssqz | limitTo : 10"></td>
+                                    <td align="right" ng-cloak ng-bind="item.ybtse"></td>
+                                    <!-- 按钮兼容2.0 ywrz 、依申请信息 1.0 ywrz-->
+                                    <td align="center" ng-cloak ng-if="item.version == 1" ng-bind-html="item | pzxh | to_trusted"></td>
+                                    <td align="center" ng-cloak ng-if="item.version == 2" ng-bind-html="item | id | to_trusted"></td>
+                                    <td align="center" ng-cloak ng-if="item.version == 3" ng-bind-html="item | cksbb | to_trusted"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="sbxxNotTips" style="display: none;border-top: 0;">
+                            <tbody>
+                                <tr>
+                                    <td align="center" ng-if="showGdsbz=='Y'" colspan="9"><font color="red">没有申报信息!</font></td>
+                                    <td align="center" ng-if="showGdsbz=='N'" colspan="8"><font color="red">没有申报信息!</font></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 申报信息分页位置 -->
+                    <!--<div class="layui-box layui-laypage layui-laypage-default"
+                        id="layui-laypage-5">
+                        <a href="javascript:;" class="layui-laypage-prev layui-disabled"
+                            id="page1" data-page="0"><i class="layui-icon"></i></a><span
+                            class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><span class="layui-laypage-skip">到第<input
+                            type="text" min="1" value="1" class="layui-input">页
+                            <button type="button" class="layui-laypage-btn">确定</button></span><span
+                            class="layui-laypage-count" id="pageInfo">共 0 条</span><span
+                            class="layui-laypage-limits"><select lay-ignore=""><option
+                                    value="10" selected="">10 条/页</option>
+                        </select></span>
+                    </div>-->
+
+
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="50">
+                                <select class="inputstyle inputstyle02" id="pageSize">
+                                    <option selected>10</option>
+                                </select>
+                            </td>
+                            <td id="pageInfo">条/页，共0条信息</td>
+                            <td>
+                                <div class="page1" id="page1"
+                                     style="padding: 10px 0; float: right;">
+                                    <div class="page_box"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="div_cb" class="hide">
+
+                    <div class="searchTable" style="clear:both;" ng-controller="viewCtrl" id="cbviewCtrlid">
+                        <table width="98%" class="layui-table" border="0" cellspacing="0" cellpadding="0" id="cbxxList">
+                            <tbody>
+                                <tr class="trheader">
+                                    <th width="5%">序号</th>
+                                    <th width="5%" ng-if="showGdsbz=='Y'">国地标志</th>
+                                    <th width="40%">财务报表名称</th>
+                                    <th width="10%">申报日期</th>
+                                    <th width="10%">税款所属期起</th>
+                                    <th width="10%">税款所属期止</th>
+                                    <!-- <th width="110px">网报作废状态</th> -->
+                                    <th width="15%">操作</th>
+                                </tr>
+                                <tr ng-repeat="item in cbxxitems" pzxh="{{item.pzxh}}">
+                                    <td align="center" ng-cloak ng-bind="item.index + 1"></td>
+                                    <td align="center" ng-cloak ng-if="showGdsbz=='Y'" ng-bind-html="item.gdslxDm | gdslxDm | to_trusted"></td>
+                                    <td align="left" ng-cloak ng-bind="item.ywbmmc"></td>
+                                    <td align="center" ng-cloak ng-bind="item.sbrq | limitTo : 10"></td>
+                                    <td align="center" ng-cloak ng-bind="item.ssqq | limitTo : 10"></td>
+                                    <td align="center" ng-cloak ng-bind="item.ssqz | limitTo : 10"></td>
+                                    <!-- <td align="center" ng-cloak ng-bind="item.sbzfmc"></td> -->
+                                    <td align="center" ng-cloak ng-if="item.version == 1" ng-bind-html="item | pzxh | to_trusted"></td>
+                                    <td align="center" ng-cloak ng-if="item.version == 3" ng-bind-html="item | cksbb | to_trusted"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="cbxxNotTips" style="display: none;border-top: 0;">
+                            <tbody>
+                                <tr>
+                                    <td align="center" ng-if="showGdsbz=='Y'" colspan="7"><font color="red">没有财报信息!</font></td>
+                                    <td align="center" ng-if="showGdsbz=='N'" colspan="6"><font color="red">没有财报信息!</font></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 财报信息分页位置 -->
+                    <!--<div class="layui-box layui-laypage layui-laypage-default"
+                        id="layui-laypage-5">
+                        <a href="javascript:;" class="layui-laypage-prev layui-disabled"
+                            id="cbpage1" data-page="0"><i class="layui-icon"></i></a><span
+                            class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><span class="layui-laypage-skip">到第<input
+                            type="text" min="1" value="1" class="layui-input">页
+                            <button type="button" class="layui-laypage-btn">确定</button></span><span
+                            class="layui-laypage-count" id="cbpageInfo">共 0 条</span><span
+                            class="layui-laypage-limits"><select lay-ignore=""><option
+                                    value="10" selected="">10 条/页</option>
+                        </select></span>
+                    </div>-->
+
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="50">
+                                <select class="inputstyle inputstyle02"
+                                        id="cbpageSize">
+                                    <option selected>10</option>
+                                </select>
+                            </td>
+                            <td id="cbpageInfo">条/页，共0条信息</td>
+                            <td>
+                                <div class="page1" id="cbpage1"
+                                     style="padding: 10px 0; float: right;">
+                                    <div class="page_box"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div style="padding: 20px 0; color: #666666; letter-spacing: 1px; font-size: 12px" id="wxts">
+                <h3 class="tishi ts01">温馨提示：</h3>
+                <p class="tishi ts02"><span style="color: #F00;">本查询仅支持通过电子税务局渠道申报的数据，如非本渠道申报的数据请前往“查询中心”中的“申报信息查询”模块。</span></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#li_sb").click(function () {
+            $(this).addClass("cur");
+            $("#li_cb").removeClass("cur");
+            $("#div_sb").show();
+            //$("#li_sb").css("background-color","#00b3de");
+            $("#div_cb").hide();
+            $("#li_sb").css("color", "#333");
+            $("#li_cb").css("color", "#999");
+
+        });
+        $("#li_cb").click(function () {
+            $(this).addClass("cur");
+            $("#li_sb").removeClass("cur");
+            $("#div_cb").show();
+            $("#div_sb").hide();
+            $("#li_cb").css("color", "#333");
+            $("#li_sb").css("color", "#999");
+        });
+    });
+    viewApp.controller('viewCtrl', function ($scope) {
+        var db_showGdsbz = 'N';
+        $scope.showGdsbz = (db_showGdsbz == 'null' || db_showGdsbz == '' || db_showGdsbz == 'undefined') ? 'Y' : db_showGdsbz;
+    });
+    //默认申报日期
+    var sbrq_q = '@Model.GDTXDate.sbrqq';
+    var sbrq_z = '@Model.GDTXDate.sbrqz';
+    var sbrq_qz = sbrq_q + " - " + sbrq_z;
+    //4.0日期控件
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //日期范围
+        /* laydate.render({
+            elem : '#sbrq',
+            value: sbrq_qz,
+            range : true
+        });
+
+        laydate.render({
+            elem : '#skssq',
+            range : true
+        }); */
+
+        //日期范围
+        laydate.render({
+            elem: '#sbrqq',
+            value: sbrq_q
+        });
+        laydate.render({
+            elem: '#sbrqz',
+            value: sbrq_z
+        });
+        laydate.render({
+            elem: '#skssqq'
+        });
+        laydate.render({
+            elem: '#skssqz'
+        });
+
+    });
+    //加载层
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+</script>
+</html>

@@ -1,0 +1,591 @@
+
+
+
+
+
+<!-- 框架公用代码 -->
+
+
+
+  
+  
+
+
+
+
+<script src="/sbzs-cjpt-web/resources/js/jquery.base64.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/lib/jquery.min.js"></script>
+<script src="/sbzs-cjpt-web/abacus/resources4/layui/layui.js"></script>
+<link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/abacus/resources4/layui/css/layui.css"/>
+<script type="text/javascript">
+	var config = {'btnCzgc':{'name':'操作规程','func':'showCzgc()','disp':'none'},'btnSave':{'name':'暂存','func':'tempSave()','disp':'block'},'btnSaved':{'name':'保存','func':'save()','disp':'block'},'btnPrepareMake':{'name':'下一步','func':'verifyPrepareMake()','disp':'block','isUsual':'true'},'btnEdit':{'name':'修改','func':'','disp':'none'},'btnPrint':{'name':'打印','func':'printForm()','disp':'none'},'btnExportXML':{'name':'导出报盘','func':'exportXML()','disp':'none'},'btnDelete':{'name':'删除','func':'tempSave','disp':'none'},'btnClose':{'name':'关闭','func':'closeForm()','disp':'none'},'btnReset':{'name':'重置','func':'resetForm()','disp':'block'}};
+	$(function(){
+		parent.menuBtnControl(config,isExporting);
+		
+		var layer;
+		layui.use('layer', function() { //独立版的layer无需执行这一句
+			layer = layui.layer;
+		});
+	});
+	//声明为全局变量，pdfCheck.js会根据该值，若为“HTML”则表示没有确认页，不校验浏览器信息
+	var makeType = "HTML";
+    var jsonParams = {"nsqx_dm":"08","zsxmDm":"10104","sbSign":"ccbb1dd072b7699eeebf0d2e97c58986","gdslxDm":"1","skssq_z":"2019-06-30","ywbm":"QYSDS_A_18YJD","tjNd":"2019","sssqZ":"2019-06-30","skssq_q":"2019-04-01","sbqx":"2019-07-15","sssqQ":"2019-04-01","tjYf":"07","gsdq":"111","zspmDm":"101040001","nsqxDmIn":"","djxh":"10111101000049968154","nsrsbh":"110109700089034","sssqQ":"2019-04-01","sssqZ":"2019-06-30"};
+    var temp = '';
+    var _bizReq_path_ = "sbzs/qysds_a_18yjd";
+    var pathRoot = "/sbzs-cjpt-web";
+    var pathRes = "/sbzs-cjpt-web/abacus/_res_";
+    var ywbm = "qysds_a_18yjd";
+    var flagFormDebuging = false;//默认开发者模式是关闭的
+    var environment = "";
+  	//阻断提示和非阻断提示
+	var errors = '[]' ;
+    var warns = '[]' ;
+    var rfTips = '';
+    if(rfTips && rfTips != '[]' && rfTips != ''){
+    	//存在容峰排队信息，把提醒都去除，避免弹出的框把容峰的去除
+    	errors = rfTips;
+    }
+    var isExporting = false;	
+    var cp = '/sbzs-cjpt-web';
+</script>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8; IE=EDGE">
+<title></title>
+<link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/abacus/_res_/css/abacus/main.css">
+<link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/abacus/_res_/css/message/message_solid.css">
+<link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/abacus/_res_/js/message/skin/default/Message.css"/>
+<link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/abacus/resources4/tax-module/taxReturns/table.css">
+<link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/abacus/resources4/layui/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/sbzs-cjpt-web/abacus/resources4/tax-css/common.css">
+<style>
+	.MenuNormal .SheetMenu {
+		min-width:300px;
+	}
+</style>
+<script type="text/javascript">
+	jsonParams = {"nsqx_dm":"08","zsxmDm":"10104","sbSign":"ccbb1dd072b7699eeebf0d2e97c58986","gdslxDm":"1","skssq_z":"2019-06-30","ywbm":"QYSDS_A_18YJD","tjNd":"2019","sssqZ":"2019-06-30","skssq_q":"2019-04-01","sbqx":"2019-07-15","sssqQ":"2019-04-01","tjYf":"07","gsdq":"111","zspmDm":"101040001","nsqxDmIn":"","djxh":"10111101000049968154","nsrsbh":"110109700089034","sssqQ":"2019-04-01","sssqZ":"2019-06-30"};
+</script>
+</head>
+<body class="USER">
+<form  id="myform"  name= "myform" method = 'post' action="/sbzs-cjpt-web/biz/sbzs/qysds_a_18yjd/make">
+<input type="hidden" id="zssbxx"  name="zssbxx" value="" />
+<input type="hidden" id="_query_string_"  name="_query_string_" value='"nsqx_dm":"08","zsxmDm":"10104","sbSign":"ccbb1dd072b7699eeebf0d2e97c58986","gdslxDm":"1","skssq_z":"2019-06-30","ywbm":"QYSDS_A_18YJD","tjNd":"2019","sssqZ":"2019-06-30","skssq_q":"2019-04-01","sbqx":"2019-07-15","sssqQ":"2019-04-01","tjYf":"07","gsdq":"111","zspmDm":"101040001","nsqxDmIn":"","djxh":"10111101000049968154","nsrsbh":"110109700089034","sssqQ":"2019-04-01","sssqZ":"2019-06-30"'/>
+<input type="hidden" id="msg" value=""/>
+	<input type="hidden" id="xybNoTip"  name="xybNoTip" value="null" />
+<input type="hidden" id="ysqxxid" name="ysqxxid" value=""/>
+<input type="hidden" id="saveData1" name="saveData" value=""/>
+<input type="hidden" id="submitData1" name="submitData" value=""/>
+<input type="hidden" id="ywbm" name="ywbm" value="qysds_a_18yjd"/>
+<input type="hidden" id="swjgDm" name="swjgDm" value=""/>
+<input type="hidden" id="djxh" name="djxh" value="10111101000049968154"/>
+<input type="hidden" id="sssqQ" name="sssqQ" value="2019-04-01"/>
+<input type="hidden" id="sssqZ" name="sssqZ" value="2019-06-30"/>
+<input type="hidden" id="gdslxDm" name="gdslxDm" value="1"/>
+<input type="hidden" id="nsrsbh" name="nsrsbh" value="110109700089034"/>
+<input type="hidden" id="test" name="test" value=""/>
+<input type="hidden" id="sjlybz" name="sjlybz" value=""/>
+<input type="hidden" id="dzbdbmList" name="dzbdbmList" value=""/>
+<input type="hidden" id="swsxDm" name="swsxDm" value=""/>
+<input type="hidden" id="_bizReq_path_" name="_bizReq_path_" value="sbzs/qysds_a_18yjd"/>
+<input type="hidden" id="isShowTbsmId"  value="null"/>
+<input type="hidden" id="fxsm"  value=""/>
+<input type="hidden" id="fbid"  value=""/>
+<input type="hidden" id="showTipsType"  value=""/>
+<input type="hidden" id="backBegin" name="backBegin" value="/sbzs-cjpt-web/biz/sbzs/qysds_a_18yjd/begin?gdslxDm=1&sssqQ=2019-04-01&sssqZ=2019-06-30&skssq_q=2019-04-01&skssq_z=2019-06-30&nsqx_dm=08&sbqx=2019-07-15&zsxmDm=10104&zspmDm=101040001&nsqxDmIn=&sbSign=ccbb1dd072b7699eeebf0d2e97c58986&tjNd=2019&tjYf=07"/>
+<input type="hidden" id="formulaExecType"  value=""/>
+<input type="hidden" id="info2tip"  value=""/>
+<input type="hidden" id="fxsmFjp"  value=""/>
+
+<input type="hidden" id="zlpzWebContextPath" value="/zlpz-cjpt-web">
+<input type="hidden" id="wbcsh" name="wbcsh" value="null"/>
+<input type="hidden" id="zyywnWebContextPath" value="/zyywn-cjpt-web"/>
+<input type="hidden" id="czgcFlag" value="N"/>
+</form>
+	<div class="TableMain">
+		<table width="100%" border="0" cellspacing="0" class="all_table" cellpadding="0">
+			<tr>
+				<td class="biao_leftmenu" valign="top">
+					<div class="MenuNormal">
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td><div class="SheetMenu leftmenucss">
+										<h3>
+						                     <div class="leftTab"><li class="active" id="bblbMenu">报表列表</li></div>
+						                     <div class="btnfixed"><span class="iconfont icon-on"></span></div>
+						                </h3>
+										<ul id="divSheetlist" class="sheetlist">
+											<li class="active"><a href="#">正在加载表单...</a></li>
+										</ul>
+										
+									</div>
+								</td>
+								<td class="close_btn close_btn1"><span><</span></td>
+							</tr>
+						</table>
+					</div>
+				</td>
+				<td valign="top" width="100%"><iframe id="frmSheet" name="frmSheet" height="100%" width="100%"></iframe></td>
+			</tr>
+		</table>
+	</div>
+	<div class='RightEdit' id='divRight'>
+		<div class='boxStyle'>
+			<h1>
+				表单数据模型&nbsp;&nbsp;<font id="lblJpathSelected"></font>
+			</h1>
+			<input id="inpJpathSelector" type="text" onchange="formDebuging.setDatamodelFilter(this.value)" />
+			<div id="divDebugDataView">
+				<iframe id="frmDebugDataView" height="100%"></iframe>
+			</div>
+		</div>
+	</div>
+	<div class='FootEdit' id='divFootEdit'>
+		<h1>
+			已装载规则库&nbsp;&nbsp;&nbsp;&nbsp;<input id="txtFormulaSearch" type="text"
+				onchange="formDebuging.setFormulaSearch(this.value)" /> <input type="button" value="清空"
+				onclick="formDebuging.clickFormulaListClear()" /> ID:&nbsp;<input id="lblFormulaId"
+				type="text" readonly="readonly" /> Type:&nbsp;<input id="lblFormulaType" type="text" readonly="readonly" />
+			Desc:&nbsp;<input id="lblFormulaDesc" type="text" readonly="readonly"
+				onclick="if (this.title) {alert('【错误信息】\n'+this.title);}" />
+		</h1>
+		<div id="divFormulaList"></div>
+		<div id="divFormulaEditor">
+			<h1>
+				编辑区&nbsp;&nbsp;&nbsp;&nbsp;ID:&nbsp;<input id="txtFormulaId" type="text" />&nbsp;&nbsp;Type:&nbsp;<input
+					id="txtFormulaType" type="text" />
+			</h1>
+			Desc:&nbsp;<input id="txtFormulaDesc" type="text" /><br> Tips:&nbsp;&nbsp;<input id="txtFormulaTips"
+				type="text" />
+			<textarea id="txtFormulaEditor"></textarea>
+			<textarea id="txtFormulaTargetEditor"></textarea>
+			<p>
+				<input id="btnClearFormula" type="button" value="清空" onclick="formDebuging.clickClearFormula(this, event)" />
+				&nbsp;<input id="btnCheckFormula" type="button" value="检查" onclick="formDebuging.clickCheckFormula(this, event)" />
+				&nbsp;<input id="btnUpdateFormula" type="button" value="更新" onclick="formDebuging.clickUpdateFormula(this, event)" />
+				&nbsp;<input id="btnAppendFormula" type="button" value="新增" onclick="formDebuging.clickAppendFormula(this, event)" />&nbsp;<input
+					id="btnEmpty" type="button" value="从excel中导入" onclick="formDebuging.clickExcelToJson(this, event)" />&nbsp;<input id="btnDeleteFormula" type="button" value="删除"
+					onclick="formDebuging.clickDeleteFormula(this, event)" />&nbsp;&nbsp;<input id="btnSave2File" type="button"
+					value="保存文件" onclick="formDebuging.clickSave2File(this, event)" style="float: right;" />
+			</p>
+		</div>
+	</div>
+	
+	<div class="FootEdit2" id="divFootEdit2">
+		<h1>
+			ywbm: <input type="text" style="width: 20%" id="ViewModeYwbm" disabled="true" />
+			urlkey: <input type="text" style="width: 25%" id="ViewModeUrlkey" disabled="true"/>
+			jpath: <input type="text" style="width: 20%;" id="ViewModeJpath" />
+			<input id="btnSaveTbsm" type="button" value="保存至数据库" onclick="formDebuging.clickSaveTbsm(this,event)" />
+			<input id="btnClearTbsm" type="button" value="清空" onclick="formDebuging.clickClearTbsm(this,event)" />
+		</h1>
+		<table width="100%">
+			<thead>
+				<tr>
+					<th><h1>填表说明</h1></th>
+					<th><h1>政策法规</h1></th>
+					<th><h1>税会差异</h1></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><textarea id="tbsm"></textarea></td>
+					<td><textarea id="zcfg"></textarea></td>
+					<td><textarea id="shcy"></textarea></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class='line' id='line'></div>
+	<div class='linefoot' id='linefoot'></div>
+	<input type="hidden" id="contextPath" value="/sbzs-cjpt-web"/>
+	<!-- 框架公共引入的js将迁移到此文件中,在此控制js引入顺序,替换原来的autoLoadJS.js的作用,以后框架添加公用的js在此文件添加 -->
+
+
+  
+
+<script type="text/javascript" src="/sbzs-cjpt-web/abacus/_res_/js/message/Message.js"></script>
+
+<script type="text/javascript" src="/sbzs-cjpt-web/sbzs_res/common.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/lib/json3.min.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/lib/jsonpath.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/lib/mask.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/fsjpath.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/formEngine.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/fxsmInitData.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/menuBtnEvent.js"></script>
+<script type="text/javascript" src="/sbzs-cjpt-web/abacus/sbzs_res/sbzs.js"></script>
+<script type="text/javascript" src="/sbzs-cjpt-web/abacus/sbzs_res/qysds_a_18yjd/js/qysds_a_18yjd.js"></script>
+<script type="text/javascript" src="/sbzs-cjpt-web/abacus/sbzs_res/qysds_a_18yjd/js/qysds_a_18yjdDeliver.js"></script>
+<script type="text/javascript" src="/sbzs-cjpt-web/abacus/sbzs_res/commonDeliver.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/formulaFunction.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/formulaEngine.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/sbCommon.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/framework/diyImport.js"></script>		
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/viewEvent.js"></script>
+<script src="/sbzs-cjpt-web/abacus/_res_/js/lib/message.js"></script>
+<!-- //TODO 此文件中有包含页面自适应的代码，后续要剥离出来 -->
+<script src="/sbzs-cjpt-web/abacus/_res_/js/abacus/formDebuging.js"></script>
+<script type="text/javascript" src="/sbzs-cjpt-web/abacus/_res_/js/abacus/responsive.tabs.js"></script>
+<script type="text/javascript" src="/sbzs-cjpt-web/abacus/resources/js/lib/pdfcheck.js"></script>
+	<script>
+  	//用户登陆数据来源标志
+    var yhsjly = "2";    
+    // 改变选中附表 C.Q 20170317
+    function fbSelected(index) {
+    	$("#divSheetlist").find("li:.current_selected_BD").removeClass("current_selected_BD");
+    	$("#divSheetlist").find("li:eq("+index+")").addClass("current_selected_BD");
+    }
+    
+	function verifyPrepareMake(){
+		setZjlxMc(); //更正申报是要不参股表的证件类型名称重新赋值。GDSDZSWJ-8118
+		var  synxw=formData.kz.temp.zb.synsfsxwqy; //上一年是否是小薇
+		var sbqylx=formData.ht.qysdsczzsyjdSbbdxxVO.A200000Ywbd.nsrxxForm.sbqylx;
+		var sjlreLj=formData.ht.qysdsczzsyjdSbbdxxVO.A200000Ywbd.sbbxxForm.sjlreLj;
+		var sfsyxxwlqy=formData.ht.qysdsczzsyjdSbbdxxVO.A200000Ywbd.sbbxxForm.sfsyxxwlqy;
+		var qzd=formData.kz.temp.zb.xwqzdje;
+		var swjgDm=formData.fq.nsrjbxx.swjgDm;		
+		var swjgDmTmp=(swjgDm!=''&&swjgDm!=null&&swjgDm!=undefined)?swjgDm.substring(0,3):'';
+		var dq=(swjgDm).substring(1,3);
+		var fb20=formData.ht.qysdsczzsyjdSbbdxxVO.A201020Ywbd;
+		var  sftx=false; //判断附表2 第二行是否有填写数据
+		var hyDm=formData.kz.temp.fb2.hyDm;
+		var fb3=formData.ht.qysdsczzsyjdSbbdxxVO.A201030Ywbd;
+		var sfqdxw300w= formData.kz.temp.zb.sfqdxw300w; 
+		var skssqq=formData.ht.qysdsczzsyjdSbbdxxVO.A200000Ywbd.nsrxxForm.skssqq;
+		var skssqz=formData.ht.qysdsczzsyjdSbbdxxVO.A200000Ywbd.nsrxxForm.skssqz;
+		 var sqXwbz=formData.hq.sbQysdsczzsyjdsbqtxxVO.sqXwbz;
+		 var sqXwbzAysb=formData.hq.sbQysdsczzsyjdsbqtxxVO.sqXwbzAysb;
+		 var yf_q=parseInt((skssqq).split("-")[1], 10);
+		 var yf_z=parseInt((skssqz).split("-")[1], 10);
+	    
+		 var tsnsrlxDm=formData.hq.sbQysdsczzsyjdsbqtxxVO.tsnsrlxDm;
+		 var kdqsszyDm=formData.fq.kdqsszyDm;
+		 var zfjglxDm=formData.fq.zfjglxDm;
+		 var kyslrq=formData.fq.kyslrq; //开业受理日期
+		 var sfsyxw=true; //是否适用小薇企业
+		 var sfbndscsb=false;//是否本年度首次申报
+		 
+		 //根据 开业受理日期 和申报暑期起 来判断当初申报  是否为本年度首次申报
+		 if(kyslrq!=""&&kyslrq!=null&&kyslrq!=undefined){
+			 //开业年度
+			 var kynd=parseInt((kyslrq).split("-")[0], 10);
+			 //开业月份
+			 var kyyf=parseInt((kyslrq).split("-")[1], 10);
+			 //申报的年度
+			 var sbnd=parseInt((skssqq).split("-")[0], 10);
+			 //申报年度大于开业年度，1月份是本年首次申报
+			 if(sbnd>kynd){
+				 if(yf_q===1){
+					 sfbndscsb=true;
+				 }
+			 }else{ //申报年度小于等于开业年度，申报月份和开业月份相等的是本年首次申报
+				 if(yf_q===kyyf){
+					 sfbndscsb=true;
+				 }
+			 }
+			
+		 }
+		 
+		 
+		 //特殊纳税人不能享受小薇,下们的小薇提示要排除 这种情况
+		    if ( "05"==tsnsrlxDm||"06"==tsnsrlxDm||"10"==tsnsrlxDm|| "0"==kdqsszyDm|| ( "2"==zfjglxDm&& "1"==kdqsszyDm)) {
+		    	sfsyxw=false;
+			}
+	
+		//GZGDSCSHJ-372:A201030保存时监控，符合小微条件，同时A201030的2-28行没有数字的，提示：“符合小型微利企业所得税优惠政策条件，请在A201030表第1行填写减免税金额”；
+		if(dq=="52"&&sfsyxxwlqy=='Y'&&sjlreLj>0.03&&sjlreLj<=qzd&&fb3!=undefined&&fb3!=null&&fb3!=""){
+			var fhtjdxxLj=formData.ht.qysdsczzsyjdSbbdxxVO.A201030Ywbd.jmsdsyhMxbForm.fhtjdxxwlqyjmqysdsLj;
+			var t_hj1_28=formData.kz.temp.fb3.t_hj1_28;	
+			if(t_hj1_28==0&&fhtjdxxLj==0){
+				parent.layer.alert("符合小型微利企业所得税优惠政策条件，请在A201030表第1行填写减免税金额！", {icon: 5});
+				return ;
+			}
+		}
+		
+		if(fb20 != undefined && fb20!=""&& fb20!= null){
+			var  fb2=formData.ht.qysdsczzsyjdSbbdxxVO.A201020Ywbd.gdzcjszjkcMxbGrid.gdzcjszjkcmxbGridlb;
+			if(fb2[1].zcyz!=0||fb2[1].zzzjjeLj!=0||fb2[1].azssybgdjsdzjjeLj!=0||fb2[1].xsjszjyhjsdzjjeLj!=0||fb2[1].nstjjeLj!=0||fb2[1].xsjszjyhjeLj!=0){
+				sftx=true;
+				
+			}
+		}
+		
+		if(sfsyxw&&(synxw=="N"||synxw=="")&&sbqylx != "2" && sjlreLj<=qzd && sfsyxxwlqy=="N"&&sfqdxw300w!='Y'){		
+			var tips="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据您公司的申报数据，您公司可能符合小型微利企业，请您再次确认是否符合小型微利企业条件，如符合请将“是否属于小型微利企业”修改为“是”。";
+			  var b=parent.layer.confirm(tips,{
+				area: ['350px','180px'],
+				title:'提示',
+				btn : ['是','否'],
+				btn2:function(index){
+					parent.layer.close(b);
+					prepareMake();
+					/* if(swjgDmTmp=='144'&&yhsjly!=undefined&&yhsjly=='0'){
+						parent.layer.confirm('请确认是否提交申报，确认则提交，取消则返回申报表页面。',{
+							title:'提示',
+							btn : ['确定','取消']
+						},function(index1){
+							parent.layer.close(index1);	
+							prepareMake();
+						},function(index2){
+							parent.layer.close(index2);						
+						});																	
+					}else{
+						parent.layer.close(index);
+						prepareMake();
+					} */
+				}
+			},function(index){
+				parent.layer.close(b);
+				formData.ht.qysdsczzsyjdSbbdxxVO.A200000Ywbd.sbbxxForm.sfsyxxwlqy="Y";
+				 var _jpath="ht.qysdsczzsyjdSbbdxxVO.A200000Ywbd.sbbxxForm.sfsyxxwlqy";
+							
+				formulaEngine.apply(_jpath,"Y");  
+				// 3、刷新校验结果和控制结果
+				
+				var $viewAppElement = $("#frmSheet").contents().find("#viewCtrlId");
+				var viewEngine = $("#frmSheet")[0].contentWindow.viewEngine;
+				var body = $("#frmSheet")[0].contentWindow.document.body;
+				
+				viewEngine.formApply($viewAppElement);
+				viewEngine.tipsForVerify(body);	
+				vaildFb2(hyDm,sftx,swjgDmTmp);
+			}); 	
+		}else if(sfqdxw300w=='Y'&&yf_q==yf_z){
+				 if((sqXwbz=="Y"||sqXwbzAysb=="Y")&&yf_z!="03"&&yf_z!="06"&&yf_z!="09"&&yf_z!="12"){
+				 
+					var msg="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按照您上期申报的信息，您已经符合小型微利企业享受条件，请调整为按季度申报企业所得税，详情向您主管税务机关了解。"
+						 parent.layer.confirm(msg,{
+								title:'提示',
+								btn : ['确定']
+							},function(index1){
+								var msg="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请及时联系主管税务机关变更申报期限。"
+									 parent.layer.confirm(msg,{
+											title:'提示',
+											btn : ['确定']
+										},function(index1){
+											closeWin();
+									});		
+						});		
+				 
+				 
+			 } else if(sfbndscsb&&sjlreLj<=500000){
+				 
+				 var tis="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据相关规定，自2019年1月1日至2021年12月31日，从事国家非限制和禁止行业，且年度应纳税所得额不超过300万元，从业人数不超过300人、资产总额不超过5000万元的企业，年应纳税所得额不超过100万元、100万元到300万元的部分，分别减按25%、50%计入应纳税所得额，按20%的税率征收企业所得税。根据您填报的信息，初步判断您很可能符合小型微利企业条件，为减轻您的办税负担，建议您联系主管税务机关调整纳税期限为按季度预缴申报，感谢您的配合！"
+				 
+				 parent.layer.confirm(tis,{
+						title:'提示',
+						btn : ['终止申报','继续申报']
+					},function(index1){
+						
+						var msg="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请及时联系主管税务机关变更申报期限。";
+						 parent.layer.confirm(msg,{
+								title:'提示',
+								btn : ['确定']
+							},function(index1){
+										closeWin();
+						});		
+						 
+					},function(index2){
+						
+						var msg="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据您填报的信息，很可能符合小型微利企业条件。如您认为本年度内有可能符合小型微利企业条件，建议您终止本次申报，尽快调整为按季度预缴申报，符合条件时可充分享受小型微利企业所得税优惠政策。如您确认不符合小型微利企业条件，不享受小型微利企业所得税优惠政策，请继续完成申报。"
+							 parent.layer.confirm(msg,{
+									title:'提示',
+									btn : ['终止申报','继续申报']
+								},function(index1){
+									closeWin();
+							},function(index2){
+								parent.layer.close(index2);	
+								vaildFb2(hyDm,sftx,swjgDmTmp);
+							});			
+					});		
+				 
+				 
+				
+			 }else if(sfbndscsb&&sjlreLj>500000){
+				 
+				 var tis="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;感谢您的配合，请您关注小型微利企业所得税普惠性优惠政策，如您认为本年度内有可能符合小型微利企业条件，建议您终止本次申报，尽快调整为按季度预缴申报，条件符合时可充分享受小型微利企业所得税优惠政策。如您确认不符合小型微利企业条件，不享受小型微利企业所得税优惠政策，请继续完成申报。"
+					 
+					 parent.layer.confirm(tis,{
+							title:'提示',
+							btn : ['终止申报','继续申报']
+						},function(index1){
+							
+							var msg="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请及时联系主管税务机关变更申报期限。";
+							 parent.layer.confirm(msg,{
+									title:'提示',
+									btn : ['确定']
+								},function(index1){
+											closeWin();
+							});		
+							 
+						},function(index2){
+							parent.layer.close(index2);	
+							vaildFb2(hyDm,sftx,swjgDmTmp);
+							
+						});		
+				 
+				 
+				 
+				 //季末月报是如果小薇判断为Y的时候 要提示阻断，因为小薇只能按季申报；
+			 }else{
+				 vaildFb2(hyDm,sftx,swjgDmTmp);
+			 }
+		
+			
+		}else{
+			vaildFb2(hyDm,sftx,swjgDmTmp);
+		}
+		
+	}
+		
+	//非重要行业填写附表2第二行的时候弹出提示  ， hyDm为空的时候是非重要行业
+	function vaildFb2(hyDm,sftx,swjgDmTmp){		
+		if(hyDm==""&&sftx){   //非重要行业填写附表2第二行的时候弹出提示  ， hyDm为空的时候是非重要行业
+			var xsd2_39=formData.kz.temp.zb.xsd2_39;
+			var tipsc="";
+			 if(xsd2_39==="Y"){
+				 tipsc="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;《固定资产加速折旧(扣除)优惠明细表》第2行为享受制造业和信息传输、软件和信息技术服务业固定资产加速折旧政策的企业录入，当前企业登记信息显示不属于可以享受该项政策的行业，若行业信息有误，请及时变更登记信息，按确定可继续填报。"
+			 }else{
+				 tipsc="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;《固定资产加速折旧(扣除)优惠明细表》第2行为享受6大行业4大领域固定资产加速折旧政策的企业录入，当前企业登记信息显示不属于可以享受该项政策的行业，若行业信息有误，请及时变更登记信息，按确定可继续申报，按取消则返回填写表单界面。";
+			 }
+			 
+			
+			  var c=parent.layer.confirm(tipsc,{
+				area: ['350px','180px'],
+				title:'提示',
+				btn : ['确定','取消'],
+				btn2:function(index){
+					parent.layer.close(c);
+				}
+			},function(index){
+				parent.layer.close(c);
+				prepareMake();
+			/* 	if(swjgDmTmp=='144'&&yhsjly!=undefined&&yhsjly=='0'){
+					parent.layer.confirm('请确认是否提交申报，确认则提交，取消则返回申报表页面。',{
+						title:'提示',
+						btn : ['确定','取消']
+					},function(index1){
+						parent.layer.close(index1);
+						prepareMake();
+					},function(index2){
+						parent.layer.close(index2);
+					});																	
+				}else{
+					prepareMake();
+				}	 */							
+			}); 
+		}else{
+			prepareMake();
+			/* if(swjgDmTmp=='144'&&yhsjly!=undefined&&yhsjly=='0'){
+				parent.layer.confirm('请确认是否提交申报，确认则提交，取消则返回申报表页面。',{
+					title:'提示',
+					btn : ['确定','取消']
+				},function(index1){
+					parent.layer.close(index1);
+					prepareMake();
+				},function(index2){
+					parent.layer.close(index2);
+				});																	
+			}else{
+				prepareMake();
+			}		 */	
+		}
+	}
+	
+	$(function(){
+		DiyImport.load($("#ywbm").val(),
+				[{
+					script:"/sbzs-cjpt-web/resources/js/lib/jquery.json2xml.js",
+					key:"tysb"
+				},{
+					script:"/sbzs-cjpt-web/resources/js/nssb/tysb/tysb.js",
+					key:"tysb"
+				},{
+					script:"/sbzs-cjpt-web/resources/js/nssb/ccssb/ccssb.js",
+					key:"ccssb"
+				},{
+					script:"/sbzs-cjpt-web/resources/js/nssb/glywwl/cbft.js",
+					key:"glywwlndbgsb"
+				}
+				]);		
+		$("#divSheetlist").find("li:not(.active)").live("click",function(){
+			$(this).siblings("li").removeClass("current_selected_BD");
+			$(this).addClass("current_selected_BD");
+		});
+		if(false == flagFormDebuging) {
+			$("#btnChangeMode").css("display","none");
+		}
+		if(environment == "1"){
+			$("#btnChangeMode").show();
+			if($("#sbywbm").val()=="YBNSRZZS" || $("#sbywbm").val()=="QYSDS_A" ||$("#sbywbm").val()=="QYSDS_B"
+				|| $("#sbywbm").val()=="FJM_QYSDS_A" ||$("#sbywbm").val()=="FJM_QYSDS_B"
+				){
+				$("#jcsz").show();
+			}
+			if($("#sbywbm").val()=="YBNSRZZS" || $("#sbywbm").val()=="QYSDS_A"){
+				$("#qcssz").show();
+			}
+			$("#btnImport01").show();
+			$("#btnExport01").show();
+			if($("#sbywbm").val().match("CWBB")){
+				$("#jcsz").show();
+				$("#btnImport01").hide();
+				$("#btnExport01").hide();
+			}
+		}else if(environment == "2"){
+			$("#btnChangeMode").hide();
+			$("#btnImport01").show();
+			$("#btnExport01").show();
+			if($("#sbywbm").val()=="YBNSRZZS" || $("#sbywbm").val()=="QYSDS_A" ||$("#sbywbm").val()=="QYSDS_B"
+				|| $("#sbywbm").val()=="FJM_QYSDS_A" ||$("#sbywbm").val()=="FJM_QYSDS_B"){
+				$("#jcsz").show();
+			}
+			if($("#sbywbm").val()=="YBNSRZZS" || $("#sbywbm").val()=="QYSDS_A"){
+				$("#qcssz").show();
+			}
+			if($("#sbywbm").val().match("CWBB")){
+				$("#jcsz").show();
+				$("#btnImport01").hide();
+				$("#btnExport01").hide();
+			}
+		}else if(environment == "3"){
+			$("#btnChangeMode").hide();
+			if($("#sbywbm").val()=="YBNSRZZS"){
+				$("#qcssz").hide();
+				$("#jcsz").hide();
+			}
+			$("#btnImport01").hide();
+			$("#btnExport01").hide();
+		}
+	});
+	window.console = window.console || {
+	    log: $.noop,
+	    debug: $.noop,
+	    info: $.noop,
+	    warn: $.noop,
+	    exception: $.noop,
+	    assert: $.noop,
+	    dir: $.noop,
+	    dirxml: $.noop,
+	    trace: $.noop,
+	    group: $.noop,
+	    groupCollapsed: $.noop,
+	    groupEnd: $.noop,
+	    profile: $.noop,
+	    profileEnd: $.noop,
+	    count: $.noop,
+	    clear: $.noop,
+	    time: $.noop,
+	    timeEnd: $.noop,
+	    timeStamp: $.noop,
+	    table: $.noop,
+	    error: $.noop
+	};
+	window.contextPath = $("#contextPath").val();
+</script>
+</body>
+</html>

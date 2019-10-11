@@ -1,0 +1,91 @@
+<!doctype html>
+<html id="ng-app" xmlns:ng="http://angularjs.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=8; IE=EDGE">
+    <title>销售不动产情况表</title>
+</head>
+<body>
+<div style="width:96%; margin:auto;" id="viewCtrlId" ng-controller="viewCtrl">
+    <div class="NewTableHead">
+        <h1 align="center">销售不动产情况表</h1>
+    </div>
+    <div class="NewTableTop">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr ng-jprefix="qcs.initData.nsrjbxx">
+                <td>纳税人名称（公章）：
+                    <span class="textline" ng-bind="nsrjbxx.nsrmc"></span>
+                </td>
+            </tr>
+            <tr ng-jprefix="qcs.initData.nsrjbxx">
+                <td>纳税人识别号：
+                    <span class="textline" ng-bind="nsrjbxx.nsrsbh"></span>
+                </td>
+            </tr>
+            <tr ng-jprefix="qcs.initData.zzsxgmsbInitData">
+                <td>填表日期：
+                    <span class="textline" ng-bind="zzsxgmsbInitData.sbrq"></span>
+                </td>
+                <td align="right">金额单位：元（列至角分）</td>
+            </tr>
+        </table>
+    </div>
+    <div class="NewTableMain">
+        <table width="100%" border="0" cellspacing="1" cellpadding="0"
+               ng-jprefix="zzssyyxgmnsrySbSbbdxxVO.xgmZzsXsbdcQkb">
+            <tr>
+                <td align="center" class="title01">项目</td>
+                <td align="center" class="title01">行次</td>
+                <td align="center" class="title01">销售额</td>
+            </tr>
+            <tr>
+                <td class="title01">销售不动产不含税销售额(差额前)</td>
+                <td class="title01" align="center">1a</td>
+                <td class="edit right"><input type="text" ng-datatype="number" ng-model="xgmZzsXsbdcQkb.xsbdcbhsxseceq">
+                </td>
+            </tr>
+            <tr>
+                <td class="title01">销售不动产本期扣除额</td>
+                <td class="title01" align="center">1b</td>
+                <td class="edit right"><input type="text" ng-datatype="number" ng-model="xgmZzsXsbdcQkb.xsbdcbqkce">
+                </td>
+            </tr>
+            <tr>
+                <td class="title01">销售不动产不含税销售额(差额后)</td>
+                <td class="title01" align="center">1c=(1a*1.05-1b)/1.05</td>
+                <td class="read right"><input type="text" readonly="true" ng-datatype="number"
+                                              ng-model="xgmZzsXsbdcQkb.xsbdcbhsxseceh">
+                </td>
+            </tr>
+            <tr>
+                <td class="title01">其中：税务机关代开的增值税专用发票不含税销售额</td>
+                <td class="title01" align="center">2</td>
+                <td class="edit right"><input type="text" ng-datatype="number"
+                                              ng-model="xgmZzsXsbdcQkb.swjgdkdzzszyfpbhsxse"></td>
+            </tr>
+
+        </table>
+        <p>注：本表一式二份，一份纳税人留存，一份主管税务机关留存。</p>
+    </div>
+    <div class="NewTableFoot">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr style="display: none;">
+                <td nowrap>收到日期：
+                    <input type="text" size="8" readonly>
+                </td>
+                <td>接收人：
+                    <input type="text" size="12" readonly>
+                </td>
+                <td nowrap align="right">主管税务机关盖章：
+                    <input type="text" size="36" readonly>
+                </td>
+            </tr>
+            <tr ng-render-finish="">
+                <td><p>填表说明：1.本表为增值税小规模主表第4行“应征增值税不含税销售额（5%征收率）”其中项，如果您属于差额征税企业，请填写销售不动产差额征税前的不含税销售额，本表第2行请填写票面（金额 +
+                    税款）÷（1 + 适用税率）的值.</p>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
